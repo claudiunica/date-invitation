@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4eedf">
+  <title>A little date? — MOM Bucharest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f4eedf;
+      --paper-deep: #e9e0ce;
+      --ink: #25382a;
+      --olive: #596448;
+      --clay: #bd704c;
+      --line: rgba(37, 56, 42, .42);
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 15% 8%, rgba(255,255,255,.7), transparent 36%),
+        radial-gradient(ellipse at 90% 78%, rgba(220,204,175,.22), transparent 32%),
+        var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
+    .page {
+      width: min(100% - 40px, 1040px);
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 26px 0 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+    }
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 18px;
+      padding: 0 0 19px;
+      border-bottom: 1px solid var(--line);
+    }
+    .micro {
+      font-size: 10px;
+      line-height: 1.8;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .micro.right { text-align: right; }
+    .brand { text-align: center; }
+    .brand-name {
+      font-size: clamp(27px, 4vw, 42px);
+      font-weight: 500;
+      letter-spacing: .23em;
+      line-height: 1;
+      padding-left: .23em;
+    }
+    .brand-city {
+      margin-top: 7px;
+      font-size: 10px;
+      letter-spacing: .42em;
+      padding-left: .42em;
+      text-transform: uppercase;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 35px 0 26px;
+    }
+    .heart {
+      color: var(--clay);
+      font-size: 32px;
+      line-height: 1;
+      margin: 2px 0 15px;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(43px, 7.5vw, 84px);
+      font-weight: 500;
+      letter-spacing: -.045em;
+      line-height: 1.02;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    .details {
+      margin-top: 23px;
+      font-size: clamp(12px, 1.8vw, 16px);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      line-height: 1.9;
+    }
+    .venue {
+      margin-top: 3px;
+      font-size: 12px;
+      letter-spacing: .29em;
+      text-transform: uppercase;
+    }
+    .illustration {
+      width: min(190px, 44vw);
+      height: 112px;
+      margin: 18px auto 12px;
+      color: var(--ink);
+    }
+    .question {
+      font-family: var(--serif);
+      font-size: clamp(23px, 3.5vw, 34px);
+      margin: 8px 0 22px;
+      font-weight: 500;
+    }
+    .actions {
+      width: min(100%, 440px);
+      min-height: 82px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: clamp(22px, 7vw, 70px);
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .choice {
+      appearance: none;
+      border-radius: 999px;
+      min-width: 154px;
+      padding: 13px 30px 15px;
+      font-family: var(--serif);
+      font-size: 24px;
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s, transform .18s;
+      touch-action: manipulation;
+    }
+    #yes {
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
+    }
+    #yes:hover { background: var(--olive); transform: translateY(-2px); }
+    #no {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--olive);
+      position: relative;
+      z-index: 5;
+    }
+    #no:hover { background: rgba(89,100,72,.06); }
+    .footer {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding-top: 18px;
+    }
+    .footer::before, .footer::after {
+      content: "";
+      height: 1px;
+      background: var(--line);
+      flex: 1;
+    }
+    .footer-heart { color: var(--clay); font-size: 18px; margin-left: 4px; }
+    .success {
+      display: none;
+      margin-top: 18px;
+      font-family: var(--serif);
+      font-size: clamp(24px, 4vw, 38px);
+      color: var(--clay);
+    }
+    .success.show { display: block; }
+    .success small {
+      display: block;
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-top: 9px;
+    }
+    .plant {
+      position: fixed;
+      left: -62px;
+      top: 28%;
+      width: 190px;
+      opacity: .14;
+      transform: rotate(-22deg);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .sun {
+      position: fixed;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      right: -110px;
+      bottom: 3%;
+      background: var(--olive);
+      opacity: .11;
+      pointer-events: none;
+    }
+    @media (max-width: 560px) {
+      .page { width: min(100% - 28px, 1040px); padding-top: 18px; }
+      .masthead { gap: 8px; padding-bottom: 14px; }
+      .micro { font-size: 8px; letter-spacing: .1em; }
+      .brand-name { font-size: 25px; }
+      .brand-city { font-size: 8px; }
+      main { padding-top: 40px; }
+      h1 { max-width: 540px; }
+      .details { letter-spacing: .13em; }
+      .venue { letter-spacing: .18em; }
+      .choice { min-width: 126px; padding: 12px 22px; font-size: 22px; }
+      .actions { gap: 18px; }
+      .plant { width: 130px; left: -65px; }
+      .footer { font-size: 9px; gap: 10px; letter-spacing: .12em; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <svg class="plant" viewBox="0 0 180 300" aria-hidden="true">
+    <g fill="none" stroke="#25382a" stroke-width="3" stroke-linecap="round">
+      <path d="M20 280 C60 220 85 150 120 25"/>
+      <path d="M62 204 C15 190 5 155 10 130 C42 143 65 166 62 204Z"/>
+      <path d="M80 157 C120 150 146 119 148 91 C115 103 91 127 80 157Z"/>
+      <path d="M99 101 C65 79 57 48 69 24 C91 46 103 72 99 101Z"/>
+      <path d="M45 237 C78 230 106 246 116 270 C84 270 58 259 45 237Z"/>
+    </g>
+  </svg>
+  <div class="sun" aria-hidden="true"></div>
+  <div class="page">
+    <header class="masthead">
+      <div class="micro"></div>
+      <div class="brand" aria-label="MOM Bucharest">
+        <div class="brand-name">MOM</div>
+        <div class="brand-city">Bucharest</div>
+      </div>
+      <div class="micro right"></div>
+    </header>
+
+    <main>
+      <div class="heart" aria-hidden="true">♡</div>
+      <h1 id="headline">Would you like<br>to join me for a date?</h1>
+      <div class="details">Friday, 23 October <span aria-hidden="true">·</span> 19:30</div>
+      <div class="venue">At MOM Bucharest</div>
+
+      <svg class="illustration" viewBox="0 0 220 125" fill="none" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M109 5V31M109 31L84 61H134L109 31Z"/>
+          <path d="M109 5L103 15H115L109 5Z"/>
+          <ellipse cx="110" cy="78" rx="57" ry="9"/>
+          <path d="M53 78L61 89H159L167 78M110 87V119M100 119H120"/>
+          <path d="M35 65V105M35 65H50L55 104M35 78H52M35 105H58"/>
+          <path d="M166 66H183L178 105H160M164 79H180M158 105H181"/>
+          <path d="M91 69C89 60 93 55 99 57C105 58 105 66 101 69M97 57V48"/>
+          <path d="M119 69C116 62 121 58 126 61C131 64 129 68 126 69M123 60V52"/>
+          <path d="M72 78Q81 72 90 78Q81 84 72 78Z"/>
+          <path d="M133 78Q142 72 151 78Q142 84 133 78Z"/>
+          <path d="M107 73Q110 68 113 73Q110 78 107 73Z"/>
+        </g>
+      </svg>
+
+      <p class="question" id="question">Be honest… is that a yes?</p>
+      <div class="actions" id="actions">
+        <button class="choice" id="yes" type="button">Yes</button>
+        <button class="choice" id="no" type="button">No</button>
+      </div>
+      <div class="success" id="success" role="status" aria-live="polite">
+        ♡
+        <small>See you Friday at MOM · 19:30</small>
+      </div>
+    </main>
+
+    <footer class="footer">See you at MOM <span class="footer-heart">♡</span></footer>
+  </div>
+
+  <script>
+    (() => {
+      const no = document.getElementById('no');
+      const yes = document.getElementById('yes');
+      const actions = document.getElementById('actions');
+      const headline = document.getElementById('headline');
+      const question = document.getElementById('question');
+      const success = document.getElementById('success');
+      let dodges = 0;
+
+      function moveNo() {
+        if (success.classList.contains('show')) return;
+        const buttonRect = no.getBoundingClientRect();
+        const pad = 8;
+        const maxX = Math.max(pad, window.innerWidth - buttonRect.width - pad);
+        const maxY = Math.max(pad, window.innerHeight - buttonRect.height - pad);
+        let x, y;
+        // Pick a new viewport position, avoiding a tiny movement.
+        for (let i = 0; i < 20; i++) {
+          x = pad + Math.random() * (maxX - pad);
+          y = pad + Math.random() * (maxY - pad);
+          if (Math.hypot(x - buttonRect.left, y - buttonRect.top) > 130) break;
+        }
+        no.style.position = 'fixed';
+        no.style.left = x + 'px';
+        no.style.top = y + 'px';
+        no.style.zIndex = '20';
+        no.style.transform = `rotate(${Math.random() * 18 - 9}deg)`;
+        dodges++;
+        if (dodges === 3) question.textContent = 'Hmm. That “No” seems a little shy…';
+        if (dodges === 6) question.textContent = 'I’ll take that as a very enthusiastic maybe.';
+      }
+
+      no.addEventListener('pointerenter', moveNo);
+      no.addEventListener('focus', moveNo);
+      no.addEventListener('touchstart', (event) => {
+        event.preventDefault();
+        moveNo();
+      }, { passive: false });
+      no.addEventListener('click', (event) => {
+        event.preventDefault();
+        moveNo();
+      });
+
+      yes.addEventListener('click', () => {
+        headline.innerHTML = 'It’s a date<span style="color:var(--clay)">.</span>';
+        question.textContent = 'HA. STIAM EU';
+        success.classList.add('show');
+        no.style.display = 'none';
+        yes.style.display='none'
+        yes.textContent = '♡ Yes! ♡';
+        yes.disabled = true;
+        yes.style.cursor = 'default';
+      });
+    })();
+  </script>
+</body>
+</html>
